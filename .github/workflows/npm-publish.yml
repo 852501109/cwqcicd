@@ -20,10 +20,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2 #拉取你的最新代码
-      - name: 使用 Node.js ${{ matrix.node-version }}开始搞事情
+      - name: 使用 Node.js 开始搞事情
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: "14"
           cache: "npm"
       - run: npm install
       - run: npm run build
@@ -36,6 +36,6 @@ jobs:
           port: 80 #你的nginx服务器ssh端口
           username: hp #你的nginx服务器用户名
           password: 199146cwq #你的nginx服务器密码
-          localDir: dist #你vue项目build好的文件的路径,每次服务器上会自动删除对应的文件夹后重新覆盖
-          remoteDir: F:/nginx-1.17.5/html #你要把你build好的文件夹放到nginx服务器上的什么位置
+          localDir: "dist/*" #你vue项目build好的文件的路径,每次服务器上会自动删除对应的文件夹后重新覆盖
+          remoteDir: "F:/nginx-1.17.5/html" #你要把你build好的文件夹放到nginx服务器上的什么位置
 
