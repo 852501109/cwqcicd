@@ -16,7 +16,7 @@ jobs:
       - name: Set up SSH connection
         uses: webfactory/ssh-agent@v0.5.0
         with:
-          ssh-private-key: ${{ secrets.cwqcicdsecret }}
+          ssh-private-key: ${{ secrets.CWQCICDSECRET }}
 
       - name: Install dependencies and build
         run: |
