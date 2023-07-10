@@ -37,5 +37,5 @@ jobs:
           username: "hp" #你的nginx服务器用户名
           password: "199146cwq" #你的nginx服务器密码
           localDir: "dist" #你vue项目build好的文件的路径,每次服务器上会自动删除对应的文件夹后重新覆盖
-          remoteDir: "F:\nginx-1.17.5\html" #你要把你build好的文件夹放到nginx服务器上的什么位置
+          remoteDir: "F:/nginx-1.17.5/html" #你要把你build好的文件夹放到nginx服务器上的什么位置
 
