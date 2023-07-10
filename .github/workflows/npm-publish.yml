@@ -14,10 +14,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Deploy to Nginx Server
-        uses: appleboy/scp-action@master
-        with:
-          host: 172.16.77.222
-          username: hp
-          key: ${{ secrets.CWQCICDSECRET }}
-          source: ./dist
-          target: F:/nginx-1.17.5/html
+        run: |
+          $secpasswd = ConvertTo-SecureString '199146cwq' -AsPlainText -Force
+          $credentials = New-Object System.Management.Automation.PSCredential ('hp', $secpasswd)
+          New-SSHSession -ComputerName 172.16.77.222 -Credential $credentials -AcceptKey -Force
+          Copy-Item -Recurse -Path ./dist -Destination F:/nginx-1.17.5/html -ToSession $SSHSession
+          Remove-SSHSession -SSHSession $SSHSession
