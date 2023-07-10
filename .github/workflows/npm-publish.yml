@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest #nodejs执行的操作系统
+    runs-on: windows-latest #nodejs执行的操作系统
 
     strategy:
       matrix:
@@ -34,8 +34,8 @@ jobs:
         with:
           host: 172.16.77.222 #你的nginx服务器公网ip
           port: 80 #你的nginx服务器ssh端口
-          username: "hp" #你的nginx服务器用户名
-          password: "199146cwq" #你的nginx服务器密码
-          localDir: "dist" #你vue项目build好的文件的路径,每次服务器上会自动删除对应的文件夹后重新覆盖
-          remoteDir: "F:/nginx-1.17.5/html" #你要把你build好的文件夹放到nginx服务器上的什么位置
+          username: hp #你的nginx服务器用户名
+          password: 199146cwq #你的nginx服务器密码
+          localDir: dist #你vue项目build好的文件的路径,每次服务器上会自动删除对应的文件夹后重新覆盖
+          remoteDir: F:/nginx-1.17.5/html #你要把你build好的文件夹放到nginx服务器上的什么位置
 
