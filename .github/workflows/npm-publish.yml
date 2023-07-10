@@ -3,26 +3,28 @@ name: Deploy to Nginx
 on:
   push:
     branches:
-      - main # 替换为你的默认分支
+      - main
 
 jobs:
   deploy:
-    runs-on: Windows 10
+    runs-on: windows-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up SSH connection
-        uses: webfactory/ssh-agent@v0.5.0
-        with:
-          ssh-private-key: ${{ secrets.CWQCICDSECRET }}
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Install dependencies and build
-        run: |
-          npm ci
-          npm run build
+      - name: Build project
+        run: npm run build
 
-      - name: Deploy to Nginx
+      - name: Copy files to Nginx folder
+        run: robocopy ./build F:\nginx-1.17.5\html /E
+
+      - name: Restart Nginx
         run: |
-          scp -r -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ./dist/* hp@F:/nginx-1.17.5/html
+          $ErrorActionPreference = 'Stop'
+          & 'F:\nginx-1.17.5\nginx.exe' -s stop
+          Start-Sleep -s 2
+          & 'F:\nginx-1.17.5\nginx.exe'
