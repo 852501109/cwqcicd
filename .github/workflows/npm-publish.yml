@@ -1,41 +1,36 @@
-# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+name: Deploy to Nginx
 
-name: Node.js CI
-# on 表示触发actions的条件
 on:
   push:
-    branches: [main] #main分支在push的时候会触发
-  pull_request:
-    branches: [main] #main分支在PR的时候会触发
+    branches:
+      - main
 
 jobs:
-  build:
-    runs-on: windows-latest #nodejs执行的操作系统
-
-    strategy:
-      matrix:
-        node-version: [14.x] #选择你需要的nodejs版本
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+  deploy:
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2 #拉取你的最新代码
-      - name: 使用 Node.js 开始搞事情
-        uses: actions/setup-node@v2
-        with:
-          node-version: "14"
-          cache: "npm"
-      - run: npm install
-      - run: npm run build
-      - name: 自动同步文件夹到我的服务器
-        # You may pin to the exact commit or the version.
-        # uses: wangyucode/sftp-upload-action@24f8bb83383dc39bed201ee5da01475e6c38c568
-        uses: wangyucode/sftp-upload-action@v1.1
-        with:
-          host: 172.16.77.222 #你的nginx服务器公网ip
-          port: 80 #你的nginx服务器ssh端口
-          username: hp #你的nginx服务器用户名
-          password: 199146cwq #你的nginx服务器密码
-          localDir: "dist/*" #你vue项目build好的文件的路径,每次服务器上会自动删除对应的文件夹后重新覆盖
-          remoteDir: "F:/nginx-1.17.5/html" #你要把你build好的文件夹放到nginx服务器上的什么位置
+    - name: Checkout code
+      uses: actions/checkout@v2
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run build
+
+    - name: Deploy to local server
+      uses: appleboy/ssh-action@master
+      with:
+        host: 172.16.77.222
+        username: myuser
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
+          sudo cp -r dist/* /path/to/nginx/html/
+          sudo service nginx restart
