@@ -20,7 +20,7 @@ jobs:
         run: npm run build
 
       - name: Copy files to Nginx folder
-        run: robocopy ./build F:\nginx-1.17.5\html /E
+        run: robocopy ./dist F:\nginx-1.17.5\html /E
 
       - name: Restart Nginx
         run: |
