@@ -1,4 +1,4 @@
-name: Deploy to Local Nginx
+name: Deploy to Nginx Server
 
 on:
   push:
@@ -13,6 +13,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Deploy to Local Nginx
-        run: |
-          cp -R ./dist F:\nginx-1.17.5\nginx.exe
+      - name: Deploy to Nginx Server
+        uses: appleboy/scp-action@master
+        with:
+          host: 172.16.77.222
+          username: hp
+          key: ${{ secrets.CWQCICDSECRET }}
+          source: ./dist
+          target: F:/nginx-1.17.5/html
