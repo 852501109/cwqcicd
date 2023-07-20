@@ -1,79 +1,87 @@
 <template>
-  <van-form @submit="onSubmit">
-    <van-field
-      v-model="form.slot1"
-      name="号牌号码"
-      placeholder="请输入号牌号码"
-      class="select_and_input"
-      :rules="[{ validator: validatorLicense, message: '请输入正确的号牌号码', trigger: 'onBlur' }]"
-    >
-      <template #label>
-        <div class="customlabel_license">
-          <div><span style="color: red">*&nbsp;</span><span>号牌号码</span></div>
-          <div class="sufix" @click="showLicense = true"
-            >{{ sufixLicense }}<van-icon name="arrow-down"
-          /></div>
-        </div>
-      </template>
-    </van-field>
-    <van-field
-      v-model="form.slot2"
-      label-class="customlabel"
-      placeholder="请输入发动机号后六位"
-      :rules="[{ validator: validatorEngine, message: '请输入正确发动机后6位', trigger: 'onBlur' }]"
-    >
-      <template #label>
-        <div class="customlabel_license">
-          <div><span style="color: red">*&nbsp;</span><span>发动机号后六位</span></div>
-        </div>
-      </template>
-    </van-field>
-    <van-field
-      v-model="form.slot3"
-      readonly
-      label-class="customlabel"
-      placeholder="请选择与车主关系"
-      @click="showAlax = true"
-      :rules="[{ required: true, message: '请选择与车主关系' }]"
-      is-link
-    >
-      <template #label
-        ><div class="customlabel_license">
-          <div><span style="color: red">*&nbsp;</span><span>与车主关系</span></div>
-        </div></template
+  <div class="filings_motor_vehicle_not_self">
+    <van-form @submit="onSubmit">
+      <van-field
+        v-model="form.slot1"
+        name="号牌号码"
+        placeholder="请输入号牌号码"
+        class="select_and_input"
+        :rules="[
+          { validator: validatorLicense, message: '请输入正确的号牌号码', trigger: 'onBlur' },
+        ]"
       >
-    </van-field>
-    <div class="tip"
-      ><van-icon color="#fac60b" name="info-o" />&nbsp;请输入待备案机动车车主收到短信验证码</div
-    >
-    <van-field v-model="sms" center clearable label="验证码" placeholder="请输入短信验证码">
-      <template #button>
-        <div v-if="countDown > 0">{{ countDown }}s</div>
-        <van-button v-else size="small" type="primary" @click="getCode">获取验证码</van-button>
-      </template>
-    </van-field>
-    <van-button type="primary" size="large" class="btn" native-type="submit">提交</van-button>
-  </van-form>
-  <van-action-sheet
-    description="从以下来源中选择"
-    v-model:show="showLicense"
-    :actions="actionsLicense"
-    @select="onSelectLicense"
-    cancel-text="取消"
-    close-on-click-action
-  />
-  <van-action-sheet
-    v-model:show="showAlax"
-    :actions="actionsAlax"
-    @select="onSelectAlax"
-    cancel-text="取消"
-    close-on-click-action
-  />
+        <template #label>
+          <div class="customlabel_license">
+            <div><span style="color: red">*&nbsp;</span><span>号牌号码</span></div>
+            <div class="sufix" @click="showLicense = true"
+              >{{ sufixLicense }}<van-icon name="arrow-down"
+            /></div>
+          </div>
+        </template>
+      </van-field>
+      <van-field
+        v-model="form.slot2"
+        label-class="customlabel"
+        placeholder="请输入发动机号后六位"
+        :rules="[
+          { validator: validatorEngine, message: '请输入正确发动机后6位', trigger: 'onBlur' },
+        ]"
+      >
+        <template #label>
+          <div class="customlabel_license">
+            <div><span style="color: red">*&nbsp;</span><span>发动机号后六位</span></div>
+          </div>
+        </template>
+      </van-field>
+      <van-field
+        v-model="form.slot3"
+        readonly
+        label-class="customlabel"
+        placeholder="请选择与车主关系"
+        @click="showAlax = true"
+        :rules="[{ required: true, message: '请选择与车主关系' }]"
+        is-link
+      >
+        <template #label
+          ><div class="customlabel_license">
+            <div><span style="color: red">*&nbsp;</span><span>与车主关系</span></div>
+          </div></template
+        >
+      </van-field>
+      <div class="tip"
+        ><van-icon color="#fac60b" name="info-o" />&nbsp;请输入待备案机动车车主收到短信验证码</div
+      >
+      <van-field v-model="sms" center clearable label="验证码" placeholder="请输入短信验证码">
+        <template #button>
+          <div v-if="countDown > 0">{{ countDown }}s</div>
+          <van-button v-else size="small" type="primary" @click="getCode">获取验证码</van-button>
+        </template>
+      </van-field>
+      <van-button type="primary" size="large" class="btn" native-type="submit">提交</van-button>
+    </van-form>
+    <van-action-sheet
+      description="从以下来源中选择"
+      v-model:show="showLicense"
+      :actions="actionsLicense"
+      @select="onSelectLicense"
+      cancel-text="取消"
+      close-on-click-action
+    />
+    <van-action-sheet
+      v-model:show="showAlax"
+      :actions="actionsAlax"
+      @select="onSelectAlax"
+      cancel-text="取消"
+      close-on-click-action
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
   import licenseApi from '@/api/license';
   import { Dialog } from 'vant';
+  import { useRouter } from 'vue-router';
+  const router = useRouter();
   onMounted(() => {
     licenseApi.getRelationshipWithOwner().then((res: any) => {
       actionsAlax.value = res.data;
@@ -100,7 +108,7 @@
   const enginePattern = /^[A-Z0-9]{6}$/;
   const validatorEngine = (val: string) => enginePattern.test(val);
   const onSubmit = () => {
-    console.log('tijiao');
+    router.push('/filingsMotorVehicleStatus');
   };
   const sms = ref('');
   const form = ref({
@@ -150,11 +158,11 @@
     border-bottom: 2px solid #457cc9;
   }
   .tip {
-    margin: 50px 0;
-    padding-left: 30px;
+    margin: 25px 0;
+    padding-left: 15px;
     width: 100%;
     text-align: left;
-    font-size: 30px;
+    font-size: 15px;
   }
   .flex-container() {
     display: flex;
@@ -165,32 +173,34 @@
   .sufix {
     position: relative;
     z-index: 1;
-    width: 110px;
-    height: 60px;
-    line-height: 60px;
-    border-radius: 10px;
+    width: 55px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 5px;
     background: #457cc9;
     color: #fff;
     text-align: center;
-    margin-top: -7px;
+    margin-top: -3.5px;
   }
-  /deep/ .customlabel {
-    width: 220px !important;
-  }
-  /deep/ .customlabel_license {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    width: 280px !important;
-  }
-  .select_and_input {
-    /deep/ .van-field__body {
-      position: relative !important;
-      left: 140px !important;
-      width: 223px !important;
+  .filings_motor_vehicle_not_self {
+    :deep(.customlabel) {
+      width: 110px !important;
     }
-    /deep/ .van-field__error-message {
-      padding-left: 150px !important;
+    :deep(.customlabel_license) {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      width: 140px !important;
+    }
+    :deep(.select_and_input) {
+      & .van-field__body {
+        position: relative !important;
+        left: 70px !important;
+        width: 111px !important;
+      }
+      & .van-field__error-message {
+        padding-left: 75px !important;
+      }
     }
   }
 </style>

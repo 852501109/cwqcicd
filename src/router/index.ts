@@ -49,22 +49,6 @@ export const layoutRoutes: Array<RouteRecordRaw> = [
     },
     component: () => import('@/pages/index.vue'),
   },
-  {
-    path: 'pinia',
-    name: 'pinia',
-    meta: {
-      title: 'pinia',
-    },
-    component: () => import('@/pages/pinia/index.vue'),
-  },
-  {
-    path: 'image-rotate',
-    name: 'image-rotate',
-    meta: {
-      title: 'image-rotate',
-    },
-    component: () => import('@/pages/image-rotate/index.vue'),
-  },
 ];
 
 const routes: Array<RouteRecordRaw> = [
@@ -74,15 +58,6 @@ const routes: Array<RouteRecordRaw> = [
     redirect: '/index',
     // 需要layout的页面
     children: layoutRoutes,
-  },
-  // 不需要layout的页面
-  {
-    path: '/login',
-    name: 'login',
-    meta: {
-      title: 'login',
-    },
-    component: () => import('@/pages/login/index.vue'),
   },
   // 替代vue2中的'*'通配符路径
   { path: '/:pathMatch(.*)*', redirect: '/' },

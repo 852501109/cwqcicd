@@ -27,6 +27,7 @@
     width: 100%;
     font-weight: bold;
     text-align: center;
+    font-size: 16px;
   }
   .banner {
     width: 100%;
@@ -40,31 +41,31 @@
     > div:nth-child(1) {
       background: linear-gradient(to right, #ffa075, #ff6b89);
       img {
-        width: 60px;
+        width: 30px;
       }
     }
     > div:nth-child(2) {
       background: linear-gradient(to right, #038dd0, #7bcff6);
       img {
-        width: 115px;
+        width: 57px;
       }
     }
     > div {
       .flex-container();
-      padding-right: 120px;
+      padding-right: 60px;
       width: 90%;
-      height: 150px;
+      height: 75px;
       margin: 0 auto;
-      margin-top: 50px;
+      margin-top: 25px;
       border-radius: 20px;
-      font-size: 40px;
+      font-size: 20px;
       font-weight: 500;
       .img {
         background: #fff;
-        width: 100px;
-        height: 100px;
-        line-height: 100px;
-        border-radius: 100px;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        border-radius: 50px;
         .flex-container();
       }
     }

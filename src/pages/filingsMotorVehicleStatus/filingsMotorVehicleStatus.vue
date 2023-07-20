@@ -4,17 +4,17 @@
       <div class="img"><img src="@/assets/img/dkw.png" /></div>
       <div>
         <div
-          >{{ licenseName }} &nbsp;&nbsp;<span class="already_vehicle" v-if="status !== 1"
+          >{{ licenseName }} &nbsp;&nbsp;<span class="already_vehicle" v-if="lStore.status !== 1"
             >已报备</span
           ></div
         >
         <div>{{ name }}</div>
       </div>
     </div>
-    <van-button type="danger" size="small" v-if="status === 1"
+    <van-button type="danger" size="small" @click="sure" v-if="lStore.status === 1"
       >&nbsp;&nbsp;&nbsp;报备&nbsp;&nbsp;&nbsp;&nbsp;</van-button
     >
-    <van-button type="primary" size="small" v-if="status !== 1"
+    <van-button type="primary" size="small" v-if="lStore.status !== 1"
       >&nbsp;&nbsp;&nbsp;取消&nbsp;&nbsp;&nbsp;&nbsp;</van-button
     >
   </div>
@@ -23,12 +23,12 @@
     background="#ecf9ff"
     :speed="50"
     left-icon="volume-o"
-    v-if="status === 1"
+    v-if="lStore.status === 1"
   >
     本应用已经成功帮助12,013万位车主找回了他们心爱的车牌。
   </van-notice-bar>
-  <img class="wxts" src="@/assets/img/wxts.png" v-if="status === 2" />
-  <van-notice-bar wrapable :scrollable="false" v-if="status === 2">
+  <img class="wxts" src="@/assets/img/wxts.png" v-if="lStore.status === 2" />
+  <van-notice-bar wrapable :scrollable="false" v-if="lStore.status === 2">
     <div style="font-weight: bold">您可以补办丢失车牌:</div>
 
     <div>方法一：</div>
@@ -48,16 +48,22 @@
     <div>方法二：</div>
     <div style="padding-left: 10px">通过手机APP“交管12123”进行办理。</div>
   </van-notice-bar>
-  <list v-if="status === 1"></list>
-  <alreadyBack v-if="status === 3"></alreadyBack>
+  <list v-if="lStore.status === 1"></list>
+  <alreadyBack v-if="lStore.status === 3"></alreadyBack>
 </template>
 
 <script setup lang="ts">
   import list from './scrollList.vue';
   import alreadyBack from './alreadyBack.vue';
-  const status = ref(3);
+  import { licenseStore } from '@/store';
+  import { useRouter } from 'vue-router';
+  const lStore = licenseStore();
+  const router = useRouter();
   const licenseName = ref('鲁B12368');
   const name = ref('*李明');
+  const sure = () => {
+    router.push('/lostLicensePlateReturn');
+  };
 </script>
 <style lang="less" scoped>
   .flex(@justify) {
@@ -71,26 +77,27 @@
   .head {
     width: 97%;
     margin: 0 auto;
+    font-size: 14px;
     .flex(space-between);
     > div {
       .flex(flex-start);
     }
     .img {
       .flex(center);
-      width: 100px;
-      height: 100px;
-      border-radius: 100px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50px;
       background: rgba(112, 112, 112, 0.1);
-      margin-right: 30px;
+      margin-right: 15px;
     }
     img {
-      width: 70px;
+      width: 35px;
     }
   }
   .already_vehicle {
     color: #fff;
     background: #2bc561;
-    border-radius: 5px;
-    padding: 5px;
+    border-radius: 2.5px;
+    padding: 2.5px;
   }
 </style>

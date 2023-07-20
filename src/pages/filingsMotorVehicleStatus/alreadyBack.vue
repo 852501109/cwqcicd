@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="already_back">
     <van-field>
       <template #label>归还人姓名</template>
       <template #input>
@@ -76,46 +76,50 @@
     border-bottom: 2px solid #457cc9;
   }
   .tip {
-    margin: 50px 0;
-    padding-left: 30px;
+    margin: 25px 0;
+    padding-left: 15px;
     width: 100%;
     text-align: left;
-    font-size: 30px;
+    font-size: 15px;
   }
   .flex-container() {
     display: flex;
     justify-content: space-around;
     align-items: center;
   }
-  :deep .customlabel {
-    width: 220px;
-  }
+
   .sufix {
     position: relative;
     z-index: 1;
-    width: 110px;
-    height: 60px;
-    line-height: 60px;
-    border-radius: 10px;
+    width: 55px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 5px;
     background: #457cc9;
     color: #fff;
     text-align: center;
-    margin-top: -7px;
+    margin-top: -3.5px;
   }
-  /deep/ .customlable {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    width: 310px !important;
-  }
-  .select_and_input {
-    /deep/ .van-field__body {
-      position: relative !important;
-      left: 140px !important;
-      width: 223px !important;
+  .already_back {
+    margin-top: 10px;
+    :deep(.customlabel) {
+      width: 110px;
     }
-    /deep/ .van-field__error-message {
-      padding-left: 150px !important;
+    :deep(.customlable) {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      width: 155px !important;
+    }
+    :deep(.select_and_input) {
+      & .van-field__body {
+        position: relative !important;
+        left: 70px !important;
+        width: 111px !important;
+      }
+      & .van-field__error-message {
+        padding-left: 75px !important;
+      }
     }
   }
 </style>

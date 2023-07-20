@@ -5,6 +5,7 @@
       <router-view />
     </div>
   </div>
+  <van-number-keyboard safe-area-inset-bottom />
 </template>
 
 <script setup lang="ts">

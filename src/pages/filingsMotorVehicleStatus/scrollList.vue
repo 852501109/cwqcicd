@@ -8,32 +8,34 @@
   </div>
   <div class="scroll-content" ref="scrollContent">
     <div v-for="(item, index) in items" :key="index" class="list-item">
-      <div>{{ item.license }}</div>
+      <div>{{ item.plateNum }}</div>
       <div>
-        <span :style="{ color: item.status === 1 ? '#07c160' : '#ff976a' }">{{
-          item.status === 1 ? '已领取' : '未领取'
+        <span :style="{ color: item.collectState === '已领取' ? '#07c160' : '#ff976a' }">{{
+          item.collectState
         }}</span>
       </div>
-      <div>{{ item.createTime }}</div>
+      <div>{{ item.discoveryTime }}</div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
   import { Ref } from 'vue';
+  import licenseApi from '@/api/license';
+
   interface licenseInterface {
-    license: string;
-    status: number;
-    createTime: string;
+    plateNum: string;
+    collectState: string;
+    discoveryTime: string;
   }
   const items = ref<licenseInterface[]>([]);
   const interval = ref<NodeJS.Timer | null>(null);
   const scrollContent: Ref<HTMLElement | null> = ref(null);
 
   onMounted(() => {
-    for (let i = 0; i < 100; i++) {
-      items.value.push({ license: `鲁B**${i}`, status: 1, createTime: '2023年7月四号' });
-    }
+    licenseApi.getPlateReturnList().then((res: any) => {
+      items.value = res.data;
+    });
     interval.value = setInterval(() => {
       const dom = scrollContent.value;
       if (dom === null || dom.scrollTop === null || dom.scrollHeight === null) return;
@@ -56,10 +58,11 @@
   .scroll-content {
     height: 55vh; /* 定义容器高度 */
     overflow: hidden; /* 隐藏滚动条 */
+    font-size: 14px;
   }
 
   .list-item {
-    height: 100px; /* 定义列表项高度 */
+    height: 50px; /* 定义列表项高度 */
   }
 
   @keyframes scrollAnimation {
@@ -72,10 +75,11 @@
   }
   .title {
     width: 100%;
-    padding: 0 50px;
+    padding: 0 25px;
+    font-size: 14px;
     .list-item {
-      height: 100px;
-      line-height: 100px;
+      height: 50px;
+      line-height: 50px;
     }
   }
   .list-item {
