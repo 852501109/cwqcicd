@@ -9,8 +9,8 @@
     <van-field>
       <template #label> 联系电话</template>
       <template #input>
-        {{ form.slot2 }}
-      </template>
+        {{ form.slot2 }}<a :href="`tel:${form.slot2}`"><van-icon name="phone-o" class="phone" /> </a
+      ></template>
     </van-field>
     <van-field>
       <template #label> 捡到地址</template>
@@ -87,7 +87,11 @@
     justify-content: space-around;
     align-items: center;
   }
-
+  .phone {
+    font-size: 24px;
+    color: #457cc9;
+    padding-left: 10px;
+  }
   .sufix {
     position: relative;
     z-index: 1;

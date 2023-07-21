@@ -1,5 +1,6 @@
 <template>
   <div class="layout">
+    <!-- <van-nav-bar safe-area-inset-top /> -->
     <Header />
     <div class="content">
       <router-view />
@@ -14,7 +15,6 @@
 
 <style lang="less" scoped>
   .layout {
-    position: absolute;
     background: rgb(245, 245, 245);
     width: 100%;
     height: 100%;

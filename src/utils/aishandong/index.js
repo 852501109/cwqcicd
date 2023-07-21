@@ -1,10 +1,6 @@
 const appword = 'aKd20dbGdFvmuwrt'; // 固定值
 
-window.onload = function () {
-  getUserInfo();
-};
-
-export default function getUserInfo() {
+export const getUserInfo = function () {
   lightAppJssdk.user.getUserInfoWithEncryptedParamByAppId({
     appId: '接入方在成功创建应用后自动生成', // 接入方在成功创建应用后自动生成
     success: function (data) {
@@ -35,7 +31,7 @@ export default function getUserInfo() {
     },
     fail: function (data) { },
   });
-}
+};
 
 /**
  * 使用jssdk调用登录页面

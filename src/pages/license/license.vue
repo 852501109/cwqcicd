@@ -18,6 +18,8 @@
 </template>
 
 <script setup lang="ts">
+  import { getUserInfo } from '@/utils/aishandong/index';
+  console.log(getUserInfo);
   const isMap = ref(false);
 </script>
 <style lang="less" scoped>

@@ -77,12 +77,12 @@
 </template>
 
 <script setup lang="ts">
-  import licenseApi from '@/api/license';
+  import api from '@/api/license';
   import { useRouter } from 'vue-router';
   import { licenseStore } from '@/store';
-  import { useLoading } from '@/hooks';
-
-  const { startLoading, stopLoading } = useLoading();
+  import { useToast } from '@/hooks';
+  import Compressor from 'compressorjs';
+  const { startLoading, stopLoading, successMsg, failMsg, showToastCustomIcon } = useToast();
   const lStore = licenseStore();
   const router = useRouter();
   const form = ref({
@@ -96,9 +96,17 @@
   const show = ref(false);
   const sufix = ref('鲁B');
   const actions = ref([{ name: '鲁B' }, { name: '鲁U' }]);
-  const handleFile = (file: any) => {
-    console.log(form.value.base64List);
-  };
+  const handleFile = (file: any) =>
+    new Promise((resolve) => {
+      // compressorjs 默认开启 checkOrientation 选项
+      // 会将图片修正为正确方向
+      new Compressor(file, {
+        success: resolve,
+        error(err) {
+          console.log(err.message);
+        },
+      });
+    });
   const pattern = /^[A-Z0-9]{6}$/;
   const validator = (val: string) => pattern.test(val);
   const chinaPhoneNumberRegex =
@@ -118,14 +126,27 @@
       plateNum: form.value.plateNum,
       images: (form.value.base64List as { content: string }[]).map((item) => item.content),
     };
+    console.log(param.images[0].length);
     startLoading();
-    licenseApi.registerOwner(param).then((res: any) => {
-      if (res.success) {
+    api
+      .plateReturn(param)
+      .then((res: any) => {
+        if (res.success) {
+          setTimeout(() => {
+            stopLoading();
+            lStore.updateStatus(3);
+            router.push('/license');
+          }, 1000);
+        } else {
+          failMsg(res.message);
+          stopLoading();
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+        failMsg('操作失败！');
         stopLoading();
-        lStore.updateStatus(3);
-        router.push('/filingsMotorVehicleStatus');
-      }
-    });
+      });
   };
 
   const onSelect = (item: any) => {

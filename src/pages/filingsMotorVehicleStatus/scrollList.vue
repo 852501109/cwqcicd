@@ -22,7 +22,8 @@
 <script setup lang="ts">
   import { Ref } from 'vue';
   import licenseApi from '@/api/license';
-
+  import { useToast } from '@/hooks';
+  const { startLoading, stopLoading, successMsg, failMsg } = useToast();
   interface licenseInterface {
     plateNum: string;
     collectState: string;
@@ -33,9 +34,23 @@
   const scrollContent: Ref<HTMLElement | null> = ref(null);
 
   onMounted(() => {
-    licenseApi.getPlateReturnList().then((res: any) => {
-      items.value = res.data;
-    });
+    startLoading();
+    licenseApi
+      .getPlateReturnList()
+      .then((res: any) => {
+        if (res.success) {
+          items.value = res.data;
+          stopLoading();
+        } else {
+          failMsg(res.message);
+          stopLoading();
+        }
+      })
+      .catch((err: any) => {
+        console.log(err.message);
+        failMsg('操作失败！');
+        stopLoading();
+      });
     interval.value = setInterval(() => {
       const dom = scrollContent.value;
       if (dom === null || dom.scrollTop === null || dom.scrollHeight === null) return;

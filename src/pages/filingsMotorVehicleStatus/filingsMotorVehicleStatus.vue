@@ -14,7 +14,7 @@
     <van-button type="danger" size="small" @click="sure" v-if="lStore.status === 1"
       >&nbsp;&nbsp;&nbsp;报备&nbsp;&nbsp;&nbsp;&nbsp;</van-button
     >
-    <van-button type="primary" size="small" v-if="lStore.status !== 1"
+    <van-button type="primary" size="small" @click="cancel" v-if="lStore.status !== 1"
       >&nbsp;&nbsp;&nbsp;取消&nbsp;&nbsp;&nbsp;&nbsp;</van-button
     >
   </div>
@@ -62,7 +62,11 @@
   const licenseName = ref('鲁B12368');
   const name = ref('*李明');
   const sure = () => {
-    router.push('/lostLicensePlateReturn');
+    lStore.updateStatus(2);
+    // lStore.updateStatus(3);
+  };
+  const cancel = () => {
+    lStore.updateStatus(1);
   };
 </script>
 <style lang="less" scoped>

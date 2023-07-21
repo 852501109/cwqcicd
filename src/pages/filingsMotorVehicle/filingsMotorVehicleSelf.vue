@@ -36,9 +36,11 @@
 </template>
 
 <script setup lang="ts">
-  // import SM from '@/assets/js/sm2/build/SM.js';
-  // console.log('SM', SM);
+  import api from '@/api/license';
   import { useRouter } from 'vue-router';
+  import { useToast } from '@/hooks';
+
+  const { startLoading, stopLoading, successMsg, failMsg } = useToast();
   const router = useRouter();
   const show = ref(false);
   const sufix = ref('鲁B');
@@ -49,11 +51,37 @@
   };
   const pattern = /^[A-Z0-9]{6}$/;
   const validator = (val: string) => pattern.test(val);
-
-  const onSubmit = () => {
-    router.push('/filingsMotorVehicleStatus');
-  };
   const licenseNumber = ref('');
+  const onSubmit = () => {
+    startLoading();
+    const params = {
+      registerName: '备案人姓名',
+      registerPhone: '备案人电话',
+      ownerName: '',
+      ownerPhone: '',
+      plateNum: sufix.value + licenseNumber.value,
+      engineNumTail: '',
+      relationshipWithOwner: '',
+    };
+    api
+      .registerOwner(params)
+      .then((res: any) => {
+        if (res.success) {
+          setTimeout(() => {
+            stopLoading();
+            router.push('/filingsMotorVehicleStatus');
+          }, 1000);
+        } else {
+          failMsg(res.message);
+          stopLoading();
+        }
+      })
+      .catch((err: any) => {
+        console.log(err.message);
+        failMsg('操作失败！');
+        stopLoading();
+      });
+  };
 </script>
 <style lang="less" scoped>
   .btn {

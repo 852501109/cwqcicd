@@ -2,7 +2,7 @@
   <div class="filings_motor_vehicle_not_self">
     <van-form @submit="onSubmit">
       <van-field
-        v-model="form.slot1"
+        v-model="form.plateNum"
         name="号牌号码"
         placeholder="请输入号牌号码"
         class="select_and_input"
@@ -20,7 +20,7 @@
         </template>
       </van-field>
       <van-field
-        v-model="form.slot2"
+        v-model="form.engineNumTail"
         label-class="customlabel"
         placeholder="请输入发动机号后六位"
         :rules="[
@@ -34,7 +34,7 @@
         </template>
       </van-field>
       <van-field
-        v-model="form.slot3"
+        v-model="form.relationshipWithOwner"
         readonly
         label-class="customlabel"
         placeholder="请选择与车主关系"
@@ -78,12 +78,14 @@
 </template>
 
 <script setup lang="ts">
-  import licenseApi from '@/api/license';
-  import { Dialog } from 'vant';
+  import api from '@/api/license';
+  import { useToast } from '@/hooks';
   import { useRouter } from 'vue-router';
+  const { startLoading, stopLoading, successMsg, failMsg, showToastCustomIcon } = useToast();
+
   const router = useRouter();
   onMounted(() => {
-    licenseApi.getRelationshipWithOwner().then((res: any) => {
+    api.getRelationshipWithOwner().then((res: any) => {
       actionsAlax.value = res.data;
       // eslint-disable-next-line
       // 在代码中使用类型断言
@@ -108,13 +110,40 @@
   const enginePattern = /^[A-Z0-9]{6}$/;
   const validatorEngine = (val: string) => enginePattern.test(val);
   const onSubmit = () => {
-    router.push('/filingsMotorVehicleStatus');
+    startLoading();
+    const params = {
+      registerName: '备案人姓名',
+      registerPhone: '备案人电话',
+      ownerName: '',
+      ownerPhone: '',
+      plateNum: sufixLicense.value + form.value.plateNum,
+      engineNumTail: form.value.engineNumTail,
+      relationshipWithOwner: form.value.relationshipWithOwner,
+    };
+    api
+      .registerOwner(params)
+      .then((res: any) => {
+        if (res.success) {
+          setTimeout(() => {
+            stopLoading();
+            router.push('/filingsMotorVehicleStatus');
+          }, 1000);
+        } else {
+          failMsg(res.message);
+          stopLoading();
+        }
+      })
+      .catch((err: any) => {
+        console.log(err.message);
+        failMsg('操作失败！');
+      });
   };
+
   const sms = ref('');
   const form = ref({
-    slot1: '',
-    slot2: '',
-    slot3: '',
+    plateNum: '',
+    engineNumTail: '',
+    relationshipWithOwner: '',
   });
   const countDown = ref(0);
   const startCountDown = () => {
@@ -131,7 +160,7 @@
   };
   const onSelectAlax = (item: any) => {
     showAlax.value = false;
-    form.value.slot3 = item.name;
+    form.value.relationshipWithOwner = item.name;
   };
   const onSelectLicense = (item: any) => {
     showLicense.value = false;
@@ -139,12 +168,8 @@
   };
 
   const getCode = () => {
-    if (!form.value.slot1 || !pattern.test(form.value.slot1)) {
-      Dialog({
-        message: '请先填写号牌号码',
-      }).then(() => {
-        // on close
-      });
+    if (!form.value.plateNum || !pattern.test(form.value.plateNum)) {
+      showToastCustomIcon('请先填写号牌号码', 'fail');
       return;
     }
     startCountDown();
