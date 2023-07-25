@@ -1,36 +1,49 @@
 <template>
-  <router-view />
+    <div id="app">
+        <!-- <keep-alive :exclude="keep"> -->
+        <router-view></router-view>
+        <!-- </keep-alive> -->
+        <!--<router-view v-if="!$route.meta.keepAlive"></router-view>-->
+    </div>
 </template>
 
-<script setup lang="ts">
-  import debug from '@/utils/debug';
-  import watermark from '@/utils/lib/watermark';
-  import copyPaste from '@/utils/lib/copy-paste';
+<script>
+import { mapState, mapMutations } from 'vuex';
 
-  onMounted(() => {
-    // 因为debug是存入localStorage中的，刷新页面会从localStorage取出，根据debug控制是否隐藏
-    debug.init();
-
-    // const { username = '', mobile = '' } = auth.getUser();
-    watermark.add({
-      // content: username + ' ' + mobile,
-    });
-    copyPaste.disable();
-  });
-
-  onBeforeUnmount(() => {
-    watermark.remove();
-    copyPaste.enable();
-  });
+export default {
+    data() {
+        return {
+            loading: null,
+            isRouterAlive: true,
+        };
+    },
+    name: 'App',
+    provide() {
+        return {
+            reload: this.reload,
+        };
+    },
+    computed: {
+        ...mapState(['isFetching']),
+    },
+    watch: {
+        isFetching(val) {
+            if (val) {
+                // this.loading = this.$loading({lock: true})
+            } else {
+                this.$nextTick(() => {
+                    // this.loading && this.loading.close()
+                });
+            }
+        },
+    },
+    methods: {
+        reload() {
+            this.isRouterAlive = false;
+            this.$nextTick(function () {
+                this.isRouterAlive = true;
+            });
+        },
+    },
+};
 </script>
-
-<style>
-  #app {
-    font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-text-size-adjust: 100%;
-  }
-</style>

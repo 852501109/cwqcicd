@@ -1,0 +1,191 @@
+.my-dialog{
+  .el-dialog .el-dialog__title {
+    font-size: 15px !important;
+  }
+
+  .el-dialog {
+    width: 400px !important;
+    .global-el-table-radio {
+      thead th .el-checkbox {
+        display: none;
+      }
+    }
+  }
+}
+//dialog toast
+.dialog-error {
+  .el-dialog__title {
+    //color: red;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .dialog-content {
+    background-image: url('../assets/images/layout/el-error.png');
+  }
+}
+
+.dialog-warn {
+  .el-dialog__title {
+    //color: #d8d41d;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .dialog-content {
+    background-image: url('../assets/images/layout/el-warn.png');
+  }
+}
+
+.dialog-tip {
+  .dialog-content {
+    background-image: url('../assets/images/layout/el-tip.png');
+  }
+}
+
+.dialog-error,
+.dialog-tip,
+.dialog-warn {
+  .el-dialog .el-dialog__body {
+    padding: 0 20px !important;
+  }
+}
+
+//loading效果
+.vue-toast {
+  .confirm .el-icon-loading {
+    display: none;
+  }
+  .confirm.is-loading .el-icon-loading {
+    display: inline-block;
+  }
+}
+
+//element dialog start
+.el-dialog__wrapper {
+  //   display: flex;
+  //   align-items: center;
+  overflow: hidden;
+}
+
+.el-dialog__wrapper > div.el-dialog {
+  max-height: 85%;
+  overflow: auto;
+  //   margin-top: 0 !important;
+  //   max-height: 75vh;
+  //   overflow: auto;
+  //   display: flex;
+  //   flex-direction: column;
+}
+.el-dialog__wrapper>div.el-dialog>.el-dialog__body{
+  max-height: none !important;
+}
+.my-dialog.el-dialog__wrapper > div.el-dialog > .el-dialog__body {
+  //   flex: 1;
+  max-height: 538px;
+  overflow: auto;
+}
+
+
+.my-dialog .dialog-to-max-height .el-dialog__body {
+  height: 538px;
+  .dialog-content {
+    height: 100%;
+  }
+}
+.my-dialog{
+  .el-dialog {
+    top: 50%;
+    width: 60%;
+    margin: 0 auto !important;
+    transform: translateY(-50%);
+
+    .el-dialog__header {
+      padding: 0 20px;
+      background-color: #f2f4f7;
+      border-bottom: 1px solid #ebebeb;
+    }
+
+    .el-dialog__title {
+      display: block;
+      height: 40px;
+      margin-right: 20px;
+      line-height: 40px;
+      font-size: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left;
+    }
+
+    .el-dialog__headerbtn {
+      top: 11px;
+      right: 18px;
+      font-size: 20px;
+      color: #333333;
+    }
+
+    .el-dialog__body {
+      padding: 20px 20px 10px;
+      min-height: 100px;
+    }
+
+    .el-dialog__footer {
+      padding: 10px;
+      text-align: right;
+      border-top: 1px solid #ebebeb;
+    }
+  }
+}
+
+.el-dialog__wrapper.dialog-error > div.el-dialog > .el-dialog__body .dialog-content,
+.el-dialog__wrapper.dialog-tip > div.el-dialog > .el-dialog__body .dialog-content,
+.el-dialog__wrapper.dialog-warn > div.el-dialog > .el-dialog__body .dialog-content {
+  text-align: center;
+  background-repeat: no-repeat;
+  background-position: center 30px;
+  padding-top: 100px;
+  min-height: 150px;
+  background-size: 50px;
+  .dialog-content-item{
+    display: block;
+    //margin-top: 15px;
+  }
+}
+
+@media only screen and (max-width: 1368px) {
+  .el-dialog__wrapper > div.el-dialog > .el-dialog__body{
+    max-height: auto;
+  }
+  .my-dialog.el-dialog__wrapper > div.el-dialog {
+    width: 78%;
+
+    > .el-dialog__body {
+      max-height: 438px;
+    }
+    .dialog-to-max-height .el-dialog__body {
+      //height: 438px;
+    }
+  }
+}
+/*自定义表单  预览样式*/
+.form-parser-dialog{
+  .el-dialog{
+    //width: 900px !important;
+    //min-height: 85%;
+    display: flex;
+    flex-direction:column;
+    .el-dialog__body{
+      min-height: auto !important;
+      max-height: 1000px !important;
+      overflow: auto;
+    }
+    .el-dialog__footer{
+      padding: 8px 20px;
+      .el-button{
+        padding: 6px 20px;
+      }
+    }
+  }
+
+}

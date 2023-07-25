@@ -1,0 +1,713 @@
+//@import url('http://at.alicdn.com/t/font_1248243_5wks4pnhcn6.css');
+
+@import './iconfont/iconfont.css'; //使用iconfont
+@import './iconfont/iconfont-online-offline.css'; //使用iconfont
+@import './iconfont/lcd.css'; //使用lcd-digital字体
+@import './variables.scss';
+@import './elementui-dialog.scss'; /*弹窗组件样式*/
+//@import './iconfont.css';
+@import './mixin.scss';
+@import './transition.scss';
+@import './sidebar.scss';
+@import './btn.scss';
+//@import url('http://at.alicdn.com/t/font_1424356_p566e6681pt.css');//因打包的时候iconfont在ie11下不显示图标，所以暂时先直接把地址写在这里等改好打包的再去掉
+//"build": "cross-env PRO_ENV=production node build/iconfontBuild.js && node build/build.js",
+
+/*@font-face {
+    font-family: HarmonyOS Sans SC;
+    src: url(../assets/huaweifont/HarmonyOS_Sans_SC_Regular.ttf);
+}*/
+
+body {
+    height: 100%;
+    min-width: 1024px;
+    background: $background;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-size: $font-size-12;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+.el-main {
+    padding: 0;
+}
+.el-header {
+    height: $header-height !important;
+}
+.el-table::before {
+    height: 0;
+}
+.el-aside {
+    overflow: visible;
+}
+.el-aside {
+    overflow: initial;
+}
+.el-table-common__list {
+    //height: calc(100% - 130px);
+    overflow-y: auto;
+    margin-bottom: 0px;
+
+    /deep/ .el-table .cell {
+        line-height: 36px;
+        color: #3a405b;
+    }
+
+    /deep/ .el-table {
+        background: #f7f8fa;
+        width: 100%;
+    }
+
+    /deep/ .el-table__header-wrapper thead th {
+        background: #f4f5f6;
+    }
+
+    /deep/ .el-table .el-table__row--striped td {
+        background: #f7f8fa;
+    }
+}
+
+.el-table__header-wrapper thead tr {
+    th {
+        background: #f4f5f6;
+        position: relative;
+        font-family: 'iconfont' !important;
+        &:after {
+            position: absolute;
+            right: 0;
+            top: -3px;
+            font-size: 12px;
+            content: '\e629';
+            color: #1a8c68;
+            display: none;
+        }
+    }
+    &:hover {
+        th:after {
+            display: inline-block;
+        }
+    }
+}
+.el-table__header-wrapper thead tr {
+    th {
+        background: #f4f5f6;
+        position: relative;
+        font-family: 'iconfont', sans-serif !important;
+        &:after {
+            position: absolute;
+            right: 0;
+            top: -3px;
+            font-size: 12px;
+            content: '\e629';
+            color: #1a8c68;
+            display: none;
+        }
+    }
+    &:hover {
+        th:after {
+            display: inline-block;
+        }
+    }
+}
+
+.blue-line {
+    border-left: 3px solid #4885d6;
+    height: 16px;
+    margin-right: 5px;
+}
+ul,
+li {
+    list-style-type: none;
+}
+
+.el-table__body .cell {
+    color: #444f61;
+}
+//表格用户角色 圆角边框包文字
+.qs-item,
+.table-circle-border-text {
+    padding: 5px 10px;
+    border: 1px solid #53a7f8;
+    font-size: 12px;
+    border-radius: 16px;
+    line-height: 16px;
+    display: inline-block;
+    color: #53a7f8;
+    //width: 130px;
+    text-align: center;
+    margin: 5px;
+}
+.new-add {
+    overflow: hidden;
+    background: #fff;
+    height: 56px;
+    line-height: 56px;
+
+    .chara-list {
+        float: left;
+        color: #3a405b;
+        margin-left: 20px;
+
+        i {
+            margin-right: 10px;
+        }
+    }
+
+    .newadd-btn {
+        float: right;
+        margin-right: 12px;
+    }
+}
+
+.el-submenu__title i,
+.el-menu-item i {
+    color: #fff;
+}
+.el-select {
+    width: 100%;
+}
+/* 菜单滚动条 */
+::-webkit-scrollbar {
+    z-index: 11;
+    width: 6px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+    background: #fff;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    width: 6px;
+    background: #b4bccc;
+}
+::-webkit-scrollbar-track-piece {
+    background: #fff;
+    width: 6px;
+}
+.el-menu.el-menu--horizontal {
+    border-bottom: 0 none;
+}
+
+html {
+    height: 100%;
+    font-size: 100px;
+    box-sizing: border-box;
+}
+
+//message显示位置防止与header重合遮挡菜单[勿动]
+.el-message {
+    top: 60px !important;
+    z-index: 999999999 !important;
+}
+
+// .el-button--default {
+//     border: 1px solid #53a7f8;
+
+//     span {
+//         color: #53a7f8;
+//     }
+
+//     &.el-button--primary span {
+//         color: #fff;
+//     }
+
+//     &.is-disabled {
+//         background-color: transparent;
+//     }
+// }
+
+// .el-button.is-disabled {
+
+//     // border: 1px solid #ebeef5;
+//     span {
+//         color: #c0c4cc;
+//     }
+// }
+
+//树节点选中时字体颜色设置
+.el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content {
+    color: #4ea7ff;
+    background-color: #fff;
+}
+
+@media only screen and (min-width: 960px) {
+    html {
+        font-size: 52px !important;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    html {
+        font-size: 63px !important;
+    }
+}
+
+@media only screen and (min-width: 1300px) {
+    html {
+        font-size: 68px !important;
+    }
+}
+
+@media only screen and (min-width: 1900px) {
+    html {
+        font-size: 100px !important;
+    }
+}
+
+#app {
+    height: 100%;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+.no-padding {
+    padding: 0px !important;
+}
+
+.padding-content {
+    padding: 4px 0;
+}
+.shanchu {
+    color: #dd5a43;
+}
+a:focus,
+a:active {
+    outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+}
+
+div:focus {
+    outline: none;
+}
+
+.fr {
+    float: right;
+}
+
+.fl {
+    float: left;
+}
+
+.pr-5 {
+    padding-right: 5px;
+}
+
+.pl-5 {
+    padding-left: 5px;
+}
+
+.block {
+    display: block;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.inlineBlock {
+    display: block;
+}
+
+.clearfix {
+    &:after {
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: ' ';
+        clear: both;
+        height: 0;
+    }
+}
+
+code {
+    background: #eef1f6;
+    padding: 15px 16px;
+    margin-bottom: 20px;
+    display: block;
+    line-height: 36px;
+    font-size: 15px;
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+
+    a {
+        color: #337ab7;
+        cursor: pointer;
+
+        &:hover {
+            color: rgb(32, 160, 255);
+        }
+    }
+}
+
+.control,
+.logout {
+    height: 60px;
+}
+
+.sysItem {
+    //width: auto;
+    // background: #3b3f4f;
+    //background: #444f61;
+    text-align: right;
+    height: $header-height;
+    box-sizing: border-box;
+}
+
+.sysItem > ul {
+    display: flex;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.sysItem > ul > li {
+    padding: 0 24px;
+}
+
+.sysItem > ul > li.sysList1 {
+    border-bottom-width: 0px !important;
+    background: url(../assets/images/ico_user_set.png) 0 center no-repeat;
+    background-color: transparent !important;
+}
+
+.sysItem > ul > li.sysList1.is-active,
+.sysItem > ul > li.sysList1:hover {
+    background: url(../assets/images/ico_user_set_hover.png) 0 center no-repeat;
+}
+
+.sysItem > ul > li.sysList2 {
+    border-bottom-width: 0px !important;
+    background: url(../assets/images/ico_logout.png) 0 center no-repeat;
+    background-color: transparent !important;
+}
+
+.sysItem > ul > li.sysList2.is-active,
+.sysItem > ul > li.sysList2:hover {
+    background: url(../assets/images/ico_logout_hover.png) 0 center no-repeat;
+}
+
+.commonHeader ul > li.is-active {
+    background-color: rgb(51, 55, 70) !important;
+    border-bottom-color: rgb(83, 167, 248) !important;
+    border-bottom-width: 4px !important;
+}
+
+.sysItem > ul > li.sysList1,
+.sysItem > ul > li.sysList2 {
+    max-width: 50%;
+}
+
+.sysItem > ul > li.sysList1:hover a,
+.sysItem > ul > li.sysList1:hover a:hover,
+.sysItem > ul > li.sysList2:hover a,
+.sysItem > ul > li.sysList2:hover a:hover {
+    color: #fff;
+}
+
+//************main-container全局样式*********
+.app-container {
+    padding: 20px;
+}
+
+.components-container {
+    margin: 30px 50px;
+    position: relative;
+}
+
+.pagination-container {
+    margin-top: 30px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.sub-navbar {
+    height: 50px;
+    line-height: 50px;
+    position: relative;
+    width: 100%;
+    text-align: right;
+    padding-right: 20px;
+    transition: 600ms ease position;
+    background: linear-gradient(
+        90deg,
+        rgba(32, 182, 249, 1) 0%,
+        rgba(32, 182, 249, 1) 0%,
+        rgba(33, 120, 241, 1) 100%,
+        rgba(33, 120, 241, 1) 100%
+    );
+
+    .subtitle {
+        font-size: 20px;
+        color: #fff;
+    }
+
+    &.draft {
+        background: #d0d0d0;
+    }
+
+    &.deleted {
+        background: #d0d0d0;
+    }
+}
+
+.link-type,
+.link-type:focus {
+    color: #337ab7;
+    cursor: pointer;
+
+    &:hover {
+        color: rgb(32, 160, 255);
+    }
+}
+
+.filter-container {
+    padding-bottom: 10px;
+
+    .filter-item {
+        display: inline-block;
+        vertical-align: middle;
+        margin-bottom: 10px;
+    }
+}
+
+//*********refine vue-multiselect plugin*********
+.multiselect {
+    line-height: 16px;
+}
+
+.multiselect--active {
+    z-index: 1000 !important;
+}
+
+//element-ui 表格样式
+.el-table__header-wrapper {
+    thead th {
+        background-color: #f7f7f8;
+        color: #3a405b;
+        font-weight: normal;
+        padding: 3px 0;
+
+        .cell {
+            height: 34px;
+            line-height: 34px;
+        }
+    }
+}
+
+//简单处理：覆盖表格部分样式暂时不做表格独立处理防止以后又改回来故在此处做一下简单覆盖(去掉cell右边框及内容全部居左)
+.el-table--border td,
+.el-table--border th,
+.el-table__body-wrapper .el-table--border.is-scrolling-left ~ .el-table__fixed {
+    border-bottom: 1px solid #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+}
+
+.el-table td.is-center,
+.el-table th.is-center {
+    text-align: center;
+}
+
+//按钮被禁用后图标颜色改为灰色
+// .el-button--default.is-disabled span {
+//     color: #bfbcbc !important;
+// }
+
+// .el-button--default.is-disabled i {
+//     color: #bfbcbc !important;
+// }
+
+// .el-button--default.is-disabled:hover {
+
+//     i,
+//     span {
+//         color: #bfbcbc !important;
+//     }
+// }
+
+// .el-button--default {
+
+//     i,
+//     span {
+//         color: #797979 !important;
+//     }
+
+//     border: 1px solid #e4e4e4;
+// }
+
+// .el-button--default:hover {
+
+//     i,
+//     span {
+//         color: #53a7f8 !important;
+//     }
+// }
+
+.resetColor.rest {
+    color: #4885d6;
+    /deep/ span {
+        color: #4885d6 !important;
+    }
+}
+
+.el-table__body-wrapper {
+    tbody {
+        td {
+            color: #a0a0a0;
+            font-weight: normal;
+            .cell {
+                line-height: 20px;
+            }
+        }
+
+        //表格里链接颜色
+        .el-table__row .table-link-color {
+            color: #53a7f8 !important;
+        }
+        tr:nth-child(2n) {
+            td {
+                background: #fafbfc;
+            }
+        }
+    }
+}
+
+.el-popover {
+    min-width: 90px !important;
+}
+
+//不可用样式
+.not-use-cls {
+    color: #c0c4cc;
+    cursor: not-allowed;
+}
+
+//表格标题栏 右边方形按钮
+.rect-icon {
+    // border: 1px solid #ebebeb;
+    // padding: 6px 15px;
+    color: #3a405b;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* 可以设置不同的进入和离开动画 */
+/* 设置持续时间和动画函数 */
+.slide-fade-enter-active {
+    transition: all 0.3s ease;
+}
+
+.slide-fade-leave-active {
+    transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to
+
+    /* .slide-fade-leave-active for below version 2.1.8 */ {
+    transform: translateX(250px);
+    opacity: 0;
+}
+.el-table .iconfont {
+    font-size: 14px;
+    cursor: pointer;
+    padding-right: 8px;
+}
+.audaque-table-list-page__content .iconfont {
+    color: #5394eb;
+}
+// .titleIcon{
+//     i:hover,&.react-active{
+//         color:#4985D6;
+//     }
+// }
+.cur {
+    cursor: pointer;
+}
+.rect-icon {
+    margin-right: 0 !important;
+    padding: 6px 16px 6px 20px;
+    color: #717783;
+    font-size: 14px;
+    background-color: #fff;
+    position: relative;
+}
+.rect-icon:hover {
+    color: #4885d6;
+}
+i.rect-icon::before {
+    color: #4885d6;
+    padding-right: 6px;
+}
+i.nocolor.rect-icon::before,
+.nocolor.rect-icon:hover {
+    color: #333;
+}
+//按钮被禁用后图标颜色改为灰色
+// .el-button--medium{padding:6px;}
+// .el-button--default {
+//     border: 1px solid #53a7f8;
+//     span {color: #6595e7;}
+// }
+// .el-button--default.is-disabled:hover {
+//     i, span {color: #bfbcbc !important;}
+// }
+// .el-button--default {
+//     i, span {color: #6595e7 !important;}
+//     border: 1px solid #53a7f8;
+// }
+
+// .el-button--default:hover {
+//     i,span {color: #53a7f8 !important;}
+// }
+// .el-button--primary{
+//     background:#4885d6;
+//     span { color: #fff !important;}
+//     &:hover{
+//         background: #66b1ff;
+//         border-color: #66b1ff;
+//         & span{color: #fff !important;}
+//     }
+// }
+
+.el-table__empty-block {
+    //border: 1px solid #f0f0f0;
+    min-height: 40px;
+    //height: 40px !important;
+}
+.el-dialog__body {
+    //text-align: center !important;
+}
+.el-table__body-wrapper.is-scrolling-none,
+.el-table__body-wrapper {
+    height: calc(100% - 55px);
+    overflow-y: auto;
+}
+
+/*修改弹出搜索框的位置。*/
+.audaque-table-search {
+    height: calc(100% - 126px) !important;
+    top: 110px !important;
+}
+.clear {
+    clear: both;
+}
+/*全局加载图标样式*/
+.global-loading {
+    .el-icon-loading {
+        font-size: 40px;
+    }
+    .el-loading-text {
+        margin: 10px 0;
+    }
+}

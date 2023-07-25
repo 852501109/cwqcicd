@@ -1,0 +1,10 @@
+@font-face {
+	font-family: 'lets-go-digital';
+	src: url('lets-go-digital.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.lets-go-digital {
+	font-family: lets-go-digital;
+}

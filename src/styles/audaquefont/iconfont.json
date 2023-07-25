@@ -1,0 +1,16 @@
+{
+  "id": "4125181",
+  "name": "shouquan",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "10139425",
+      "name": "授权",
+      "font_class": "shouquan",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    }
+  ]
+}
